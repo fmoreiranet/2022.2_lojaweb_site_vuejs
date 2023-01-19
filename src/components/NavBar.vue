@@ -93,11 +93,7 @@ export default {
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <li class="nav-item">
-                        <RouterLink class="nav-link" aria-current="page" to="/user/perfil">
-                            {{ usuario.nome }}
-                        </RouterLink>
-                    </li>
+
                     <li class="nav-item pointer">
                         <a class="nav-link" @click="logoff()">Sair</a>
                     </li>

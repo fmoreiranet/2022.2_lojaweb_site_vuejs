@@ -32,11 +32,7 @@ const router = createRouter({
       name: 'user-login',
       component: () => import('../views/UserLogin.vue')
     },
-    {
-      path: '/user/perfil',
-      name: 'user-perfil',
-      component: () => import('../views/UserPerfil.vue')
-    },
+
   ]
 })
 
