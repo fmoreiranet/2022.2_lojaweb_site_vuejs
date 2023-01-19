@@ -8,24 +8,23 @@ export default {
         return {
             usuarios: [
                 //Mock
-                {
-                    "id_usuario": null,
-                    "nome": "Maria Silva",
-                    "foto": null,
-                    "cpf": "4562345233",
-                    "email": "maria@email.com",
-                    "telefone": "(21)5555-898989",
-                    "data_nasc": "2000-09-10",
-                    "senha": "123456",
-                    "ativo": 1
-                }
+                // {
+                //     "id_usuario": null,
+                //     "nome": "Maria Silva",
+                //     "foto": null,
+                //     "cpf": "4562345233",
+                //     "email": "maria@email.com",
+                //     "telefone": "(21)5555-898989",
+                //     "data_nasc": "2000-09-10",
+                //     "senha": "123456",
+                //     "ativo": 1
+                // }
             ],
             usuario: {}
         }
     },
     mounted() {
         this.list();
-        this.get(1);
     },
     methods: {
         listaOld() {

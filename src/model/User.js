@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 export class User {
     constructor(
         id_usuario = null,
@@ -7,7 +8,8 @@ export class User {
         email = "",
         senha = "",
         telefone = "",
-        data_nasc = null,
+        data_nasc = new Date(),
+        perfil = 1,
         ativo = true
     ) {
         this.id_usuario = id_usuario;
@@ -17,7 +19,8 @@ export class User {
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
-        this.data_nasc = data_nasc;
+        this.data_nasc = moment(data_nasc, "YYYY-MM-DD");
+        this.perfil = perfil;
         this.ativo = ativo;
     }
 
