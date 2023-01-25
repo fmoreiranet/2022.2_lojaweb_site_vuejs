@@ -14,7 +14,7 @@ export default {
     },
 
     get: function (id) {
-        return http.get("/usuario/get/" + id);
+        return http.get("/usuario/" + id);
     },
 
     logon: function (user) {

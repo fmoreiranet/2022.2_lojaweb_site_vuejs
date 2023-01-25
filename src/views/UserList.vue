@@ -1,9 +1,7 @@
 <script>
-import NavBar from '@/components/NavBar.vue';
 import userService from '@/service/userService';
 
 export default {
-    components: { NavBar },
     data() {
         return {
             usuarios: [
@@ -57,7 +55,6 @@ export default {
 </script>
 
 <template>
-    <NavBar></NavBar>
     <section class="container">
         <h2>Usuarios</h2>
         <table class="table">
@@ -74,7 +71,9 @@ export default {
             </thead>
             <tbody>
                 <tr v-for="user in usuarios" :key="user">
-                    <td>{{ user.id_usuario }}</td>
+                    <td @click="$router.push(`/user/perfil/${user._id}`)">
+                        {{ user._id }}
+                    </td>
                     <td>{{ user.nome }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.data_nasc }}</td>
