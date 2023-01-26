@@ -5,7 +5,8 @@ export default {
     data() {
         return {
             usuario: {},
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            perfil: null
         }
     },
     methods: {
@@ -21,17 +22,30 @@ export default {
         },
         upload() {
             let dataForm = new FormData();
-            console.log(this.$refs);
+
             for (let file of this.$refs.files.files) {
                 dataForm.append("file", file);
             }
+            dataForm.append("user", this.usuario._id);
 
-            console.log("Formulario Foto", dataForm);
+            userService.upload(dataForm)
+                .then(res => {
+                    console.log(res);
+                    this.perfil = this.updatePhoto(res.data.files[0].filename);
+                }).catch(err => {
+                    console.error(err)
+                })
+        },
+        updatePhoto(foto) {
+            let local = import.meta.env.VITE_APIURL;
+            let folder = import.meta.env.VITE_UPLOADURL + "/users/";
+            return (local + folder + foto + ".jpg");
         }
     },
     mounted() {
         this.get(this.id);
-    }
+    },
+    me
 }
 </script>
 
@@ -85,8 +99,9 @@ export default {
         </div>
 
         <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupPhoto">
-            <label class="input-group-text" for="inputGroupPhoto" ref="files" multiple @change="upload()"></label>
+            <input type="file" class="form-control" id="inputGroupPhoto" name="file" ref="files" multiple
+                @change="upload()">
+            <label class="input-group-text" for="inputGroupPhoto"></label>
         </div>
 
         <div class="mb-3">
@@ -96,6 +111,11 @@ export default {
         </div>
 
     </section>
+    <section class="container">
+        {{ perfil }}
+        <img v-if="perfil != null" class="img-fluid" alt="perfil" :src="perfil" width="100%" />
+    </section>
+
 </template>
 
 <style scoped>
