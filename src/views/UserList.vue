@@ -1,6 +1,7 @@
 <script>
 import userService from '@/service/userService';
 
+
 export default {
     data() {
         return {
@@ -31,6 +32,7 @@ export default {
             });
         },
         list() {
+
             userService.list()
                 .then(res => {
                     console.log(res);
@@ -38,16 +40,6 @@ export default {
                 }).catch(error => {
                     console.log(error);
                     alert("Erro ao pegar a lista de usuário!");
-                })
-        },
-        get(id) {
-            userService.get(id)
-                .then(res => {
-                    console.log(res);
-                    this.usuario = res.data
-                }).catch(error => {
-                    console.log(error);
-                    alert("Erro ao pegar dados do usuário!");
                 })
         },
     }
@@ -71,7 +63,7 @@ export default {
             </thead>
             <tbody>
                 <tr v-for="user in usuarios" :key="user">
-                    <td @click="$router.push(`/user/perfil/${user._id}`)">
+                    <td role="button" @click="$router.push(`/user/perfil/${user._id}`)">
                         {{ user._id }}
                     </td>
                     <td>{{ user.nome }}</td>
@@ -95,7 +87,7 @@ export default {
                 <img :src="user.foto" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ user.nome }}</h5>
-                    <p class="card-text">ID: {{ user.id_usuario }} </p>
+                    <p class="card-text">ID: {{ user._id }} </p>
 
                     <p class="card-text">{{ user.email }}</p>
                     <p class="card-text">{{ user.data_nasc }}</p>

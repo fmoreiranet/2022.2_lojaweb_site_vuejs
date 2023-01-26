@@ -19,6 +19,15 @@ export default {
                     alert("Erro ao pegar dados do usuário!");
                 })
         },
+        upload() {
+            let dataForm = new FormData();
+            console.log(this.$refs);
+            for (let file of this.$refs.files.files) {
+                dataForm.append("file", file);
+            }
+
+            console.log("Formulario Foto", dataForm);
+        }
     },
     mounted() {
         this.get(this.id);
@@ -73,6 +82,11 @@ export default {
             <input type="checkbox" name="ativo" class="" placeholder="" aria-describedby="helpAtivo"
                 v-model="usuario.ativo" checked={{usuario.ativo}} />
             <small id="helpAtivo" class="text-muted"></small>
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupPhoto">
+            <label class="input-group-text" for="inputGroupPhoto" ref="files" multiple @change="upload()"></label>
         </div>
 
         <div class="mb-3">
