@@ -6,6 +6,7 @@ export default {
         return {
             usuario: {},
             id: this.$route.params.id,
+            email: this.$route.params.email,
             perfil: null
         }
     },
@@ -23,7 +24,7 @@ export default {
         upload() {
             let dataForm = new FormData();
 
-            for (let file of this.$refs.files.files) {
+            for (let file of this.$refs.image.files) {
                 dataForm.append("file", file);
             }
             dataForm.append("user", this.usuario._id);
@@ -39,13 +40,12 @@ export default {
         updatePhoto(foto) {
             let local = import.meta.env.VITE_APIURL;
             let folder = import.meta.env.VITE_UPLOADURL + "/users/";
-            return (local + folder + foto + ".jpg");
+            return (local + folder + foto);
         }
     },
     mounted() {
         this.get(this.id);
     },
-    me
 }
 </script>
 
@@ -98,12 +98,6 @@ export default {
             <small id="helpAtivo" class="text-muted"></small>
         </div>
 
-        <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupPhoto" name="file" ref="files" multiple
-                @change="upload()">
-            <label class="input-group-text" for="inputGroupPhoto"></label>
-        </div>
-
         <div class="mb-3">
             <button type="button" class="btn btn-danger">
                 Sair
@@ -111,11 +105,20 @@ export default {
         </div>
 
     </section>
+
+    <section class="container">
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupPhoto" name="file" ref="image" multiple
+                @change="upload()">
+            <label class="input-group-text" for="inputGroupPhoto"></label>
+        </div>
+    </section>
+
     <section class="container">
         {{ perfil }}
         <img v-if="perfil != null" class="img-fluid" alt="perfil" :src="perfil" width="100%" />
     </section>
-
+    {{ id }} {{ email }}
 </template>
 
 <style scoped>
