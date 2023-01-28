@@ -102,7 +102,7 @@ export default {
             <button type="button" class="btn btn-danger">
                 Sair
             </button>
-            <RouterLink to="/address" type="button" class="btn btn-danger">
+            <RouterLink :to="{ path: '/address/' + usuario._id }" type="button" class="btn btn-danger">
                 Enderecos
             </RouterLink>
         </div>

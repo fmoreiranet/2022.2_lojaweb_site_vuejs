@@ -1,7 +1,7 @@
-const constantes = {
+const Constantes = {
     categorias: [
-        { id: 1, name: "elétrico" },
-        { id: 2, name: "cozinha" },
+        { id: 1, name: "Elétrico" },
+        { id: 2, name: "Cozinha" },
     ],
     tipo_usuario: [
         { id: 0, name: "admin" },
@@ -9,9 +9,9 @@ const constantes = {
         { id: 2, name: "" },
     ],
     tipo_endereco: [
-        { id: 1, name: "residencia" },
-        { id: 2, name: "comercial" },
+        { id: 1, name: "Residencial" },
+        { id: 2, name: "Comercial" },
     ]
 }
 
-export default constantes;
+export default Constantes;
