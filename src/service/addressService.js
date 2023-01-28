@@ -1,14 +1,14 @@
-import { Endereco } from '@/model/Endereco';
+import { Address } from '@/model/Address';
 import http from 'config';
 
 export default {
-    add: function (endereco = new Endereco) {
+    add: function (endereco = new Address) {
         console.log(endereco);
         return http.post("endereco/add", endereco);
     },
 
-    list: function () {
-        return http.get("endereco/list");
+    list: function (idUser) {
+        return http.get("endereco/list/" + idUser);
     },
 
     get: function (cep) {

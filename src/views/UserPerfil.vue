@@ -1,5 +1,6 @@
 <script>
 import userService from '@/service/userService';
+import { RouterLink } from 'vue-router';
 
 export default {
     data() {
@@ -8,34 +9,32 @@ export default {
             id: this.$route.params.id,
             email: this.$route.params.email,
             perfil: null
-        }
+        };
     },
     methods: {
         get(id) {
             userService.get(id)
                 .then(res => {
                     console.log(res);
-                    this.usuario = res.data
+                    this.usuario = res.data;
                 }).catch(error => {
                     console.log(error);
                     alert("Erro ao pegar dados do usuário!");
-                })
+                });
         },
         upload() {
             let dataForm = new FormData();
-
             for (let file of this.$refs.image.files) {
                 dataForm.append("file", file);
             }
             dataForm.append("user", this.usuario._id);
-
             userService.upload(dataForm)
                 .then(res => {
                     console.log(res);
                     this.perfil = this.updatePhoto(res.data.files[0].filename);
                 }).catch(err => {
-                    console.error(err)
-                })
+                    console.error(err);
+                });
         },
         updatePhoto(foto) {
             let local = import.meta.env.VITE_APIURL;
@@ -46,6 +45,7 @@ export default {
     mounted() {
         this.get(this.id);
     },
+    components: { RouterLink }
 }
 </script>
 
@@ -102,6 +102,9 @@ export default {
             <button type="button" class="btn btn-danger">
                 Sair
             </button>
+            <RouterLink to="/address" type="button" class="btn btn-danger">
+                Enderecos
+            </RouterLink>
         </div>
 
     </section>
