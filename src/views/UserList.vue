@@ -1,7 +1,6 @@
 <script>
 import userService from '@/service/userService';
 
-
 export default {
     data() {
         return {

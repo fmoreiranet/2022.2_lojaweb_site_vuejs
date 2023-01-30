@@ -1,13 +1,15 @@
 <script>
 import userService from '@/service/userService';
 import addressService from '@/service/addressService';
+import { User } from '@/model/User';
+import { Address } from '@/model/Address';
 
 export default {
     data() {
         return {
-            usuario: {},
+            usuario: new User,
             enderecos: [],
-            endereco: {},
+            endereco: new Address,
             id: this.$route.params.id,
         }
     },
@@ -23,24 +25,33 @@ export default {
                 })
         },
         getUserAddress(idUser) {
-            addressService.get(idUser)
+            addressService.list(idUser)
                 .then(res => {
                     console.log(res);
                     this.enderecos = res.data
                 }).catch(error => {
                     console.log(error);
-                    alert("Erro ao pegar dados do endereco!");
+                    //alert("Erro ao pegar dados do endereço!");
                 })
         },
         addAddress() {
+            this.endereco.id_user = this.id;
             addressService.add(this.endereco)
                 .then(res => {
                     console.log(res);
+                    alert("Cadastrado!");
                 }).catch(error => {
                     console.log(error);
-                    alert("Erro ao pegar dados do endereco!");
+                    alert("Erro ao gravar o endereço!");
                 })
         },
+        async buscaCEP(cep) {
+            try {
+                this.endereco = await addressService.getAddressCEP(cep);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
     },
     mounted() {
         this.getUserAddress(this.id);
@@ -50,11 +61,11 @@ export default {
 
 <template>
     <section class="container bg-light form-add">
-        <h2>Enderecos do Usuario</h2>
+        <h2>Endereços do Usuário</h2>
         <div class="form-group">
             <label for="">Cep</label>
             <input type="text" name="cep" class="form-control" placeholder="" aria-describedby="helpcep"
-                v-model="endereco.cep" />
+                v-model="endereco.cep" @keyup="buscaCEP($event.target.value)" />
             <small id="helpcep" class="text-muted"></small>
         </div>
         <div class="form-group">
@@ -66,42 +77,41 @@ export default {
 
         <div class="form-group">
             <label for="">Bairro</label>
-            <input type="text" name="bairro" class=" form-control" placeholder="" aria-describedby="helpPass"
+            <input type="text" name="bairro" class=" form-control" placeholder="" aria-describedby="helpBairro"
                 v-model="endereco.bairro" />
-            <small id="helpPass" class="text-muted"></small>
+            <small id="helpBairro" class="text-muted"></small>
         </div>
 
         <div class="form-group">
             <label for="">Cidade</label>
-            <input type="text" name="cidade" class="form-control" placeholder="" aria-describedby="helpDate"
-                v-model="endereco.cidade" />
-            <small id="helpDate" class="text-muted"></small>
+            <input type="text" name="localidade" class="form-control" placeholder="" aria-describedby="helpLocalidade"
+                v-model="endereco.localidade" />
+            <small id="helpLocalidade" class="text-muted"></small>
         </div>
         <div class="form-group">
             <label for="">UF</label>
-            <input type="text" name="uf" class="form-control" placeholder="" aria-describedby="helpuf"
+            <input type="text" name="uf" class="form-control" placeholder="" aria-describedby="helpUF"
                 v-model="endereco.uf" />
-            <small id="helpuf" class="text-muted"></small>
+            <small id="helpUF" class="text-muted"></small>
         </div>
 
         <div class="form-group">
             <label for="">Numero</label>
-            <input type="number" name="numero" class="form-control" placeholder="" aria-describedby="helpnumero"
+            <input type="number" name="numero" class="form-control" placeholder="" aria-describedby="helpNumero"
                 v-model="endereco.numero" />
-            <small id="helpnumero" class="text-muted"></small>
+            <small id="helpNumero" class="text-muted"></small>
         </div>
 
         <div class="form-group">
             <label for="">Complemento</label>
-            <input type="text" name="complemento" class="form-control" placeholder="" aria-describedby="helpcomplemento"
+            <input type="text" name="complemento" class="form-control" placeholder="" aria-describedby="helpComplemento"
                 v-model="endereco.complemento" />
-            <small id="helpcomplemento" class="text-muted"></small>
+            <small id="helpComplemento" class="text-muted"></small>
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-danger">
-                Sair
-            </button>
+            <button type="button" class="btn btn-primary" @click="addAddress()">Salvar</button>
+            <router-link to="/" type="button" class="btn btn-danger">Cancelar</router-link>
         </div>
     </section>
 
@@ -110,7 +120,7 @@ export default {
             <p>{{ endereco.cep }}</p>
             <p>{{ endereco.logradouro }}</p>
             <p>{{ endereco.bairro }}</p>
-            <p>{{ endereco.cidade }}</p>
+            <p>{{ endereco.localidade }}</p>
             <p>{{ endereco.uf }}</p>
             <p>{{ endereco.numero }}</p>
             <p>{{ endereco.complemento }}</p>
