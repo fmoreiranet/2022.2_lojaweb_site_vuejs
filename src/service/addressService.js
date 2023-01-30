@@ -1,5 +1,5 @@
 import { Address } from '@/model/Address';
-import http from 'config';
+import http from './config';
 
 export default {
     add: function (endereco = new Address) {

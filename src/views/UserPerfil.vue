@@ -36,6 +36,16 @@ export default {
                     console.error(err);
                 });
         },
+        upload64() {
+            let files = this.$refs.image.files;
+            userService.uploadBase64(files, this.usuario._id)
+                .then(res => {
+                    console.log(res);
+                    this.perfil = this.updatePhoto(res.data);
+                }).catch(err => {
+                    console.error(err);
+                });
+        },
         updatePhoto(foto) {
             let local = import.meta.env.VITE_APIURL;
             let folder = import.meta.env.VITE_UPLOADURL + "/users/";
@@ -112,7 +122,7 @@ export default {
     <section class="container">
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="inputGroupPhoto" name="file" ref="image" multiple
-                @change="upload()">
+                @change="upload64()">
             <label class="input-group-text" for="inputGroupPhoto"></label>
         </div>
     </section>
