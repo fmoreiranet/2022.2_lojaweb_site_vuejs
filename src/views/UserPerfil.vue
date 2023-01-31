@@ -36,10 +36,9 @@ export default {
                     console.error(err);
                 });
         },
-        updatePhoto(foto) {
-            let local = import.meta.env.VITE_APIURL;
-            let folder = import.meta.env.VITE_UPLOADURL + "/users/";
-            return (local + folder + foto);
+        updatePhoto() {            
+            let fotos = JSON.parse(this.updatePhoto);
+            return fotos && fotos.length > 0 ? fotos[0] : "/public/perfil.jpeg";
         }
     },
     mounted() {

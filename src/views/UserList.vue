@@ -69,7 +69,7 @@ export default {
                     <td>{{ user.email }}</td>
                     <td>{{ user.data_nasc }}</td>
                     <td>{{ user.cpf }}</td>
-                    <td>{{ user.foto }}</td>
+                    <td><img :src="user.foto" :alt="user.nome" width="40px"></td>
                     <!-- <td>{{ user.senha }}</td> -->
                     <td>{{ user.telefone }}</td>
                     <td>{{ user.ativo }}</td>
@@ -95,7 +95,7 @@ export default {
                     <!-- <p class="card-text">{{ user.senha }}</p> -->
                     <p class="card-text">{{ user.telefone }}</p>
                     <p class="card-text">{{ user.ativo }}</p>
-                    <a href="#" class="btn btn-primary">Editar</a>
+                    <button class="btn btn-primary" @click="$router.push(`/user/perfil/${user._id}`)">Editar</button>
                 </div>
             </div>
         </div>
