@@ -30,14 +30,14 @@ export default {
             dataForm.append("user", this.usuario._id);
             userService.upload(dataForm)
                 .then(res => {
-                    console.log(res);
-                    this.perfil = this.updatePhoto(res.data.files[0].filename);
+                    console.log(res.data.files);
+                    this.perfil = this.updatePhoto(res.data.files);
                 }).catch(err => {
                     console.error(err);
                 });
         },
-        updatePhoto() {            
-            let fotos = JSON.parse(this.updatePhoto);
+        updatePhoto(files) {            
+            let fotos = JSON.parse(files);
             return fotos && fotos.length > 0 ? fotos[0] : "/public/perfil.jpeg";
         }
     },

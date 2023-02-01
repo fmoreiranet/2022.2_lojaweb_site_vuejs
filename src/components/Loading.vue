@@ -1,6 +1,7 @@
 <script>
 
 export default {
+    name: 'Loading',
     data() { },
     methods: {
         show: function () {

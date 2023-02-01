@@ -1,7 +1,12 @@
 <script>
 import userService from '@/service/userService';
+import Loading from '@/components/Loading.vue';
+
 
 export default {
+    components: {
+      Loading  
+    },
     data() {
         return {
             usuarios: [
@@ -31,7 +36,7 @@ export default {
             });
         },
         list() {
-
+           
             userService.list()
                 .then(res => {
                     console.log(res);
@@ -46,6 +51,7 @@ export default {
 </script>
 
 <template>
+    <Loading/>
     <section class="container">
         <h2>Usuarios</h2>
         <table class="table">
