@@ -3,12 +3,13 @@ import userService from '@/service/userService';
 import { RouterLink } from 'vue-router';
 
 export default {
+    components: { RouterLink },
     data() {
         return {
             usuario: {},
             id: this.$route.params.id,
             email: this.$route.params.email,
-            perfil: null
+            perfil: this.updatePhoto() 
         };
     },
     methods: {
@@ -33,18 +34,25 @@ export default {
                     console.log(res.data.files);
                     this.perfil = this.updatePhoto(res.data.files);
                 }).catch(err => {
-                    console.error(err);
+                    console.error(err.message);
                 });
         },
-        updatePhoto(files) {            
-            let fotos = JSON.parse(files);
-            return fotos && fotos.length > 0 ? fotos[0] : "/public/perfil.jpeg";
+        updatePhoto(files) {       
+            try {                
+                let fotos = files;
+                return fotos && fotos.length == 0 ? "/perfil.jpeg"
+                : fotos.length == 1 ? fotos[0]
+                : fotos;
+            } catch (error) {
+                console.error("Error: ", error.message)
+                return "/perfil.jpeg";
+            }  
         }
     },
     mounted() {
         this.get(this.id);
     },
-    components: { RouterLink }
+   
 }
 </script>
 
@@ -117,10 +125,8 @@ export default {
     </section>
 
     <section class="container">
-        {{ perfil }}
-        <img v-if="perfil != null" class="img-fluid" alt="perfil" :src="perfil" width="100%" />
+        <img class="img-fluid" alt="perfil" :src='perfil' width="100%" />
     </section>
-    {{ id }} {{ email }}
 </template>
 
 <style scoped>
